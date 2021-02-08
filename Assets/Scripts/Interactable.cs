@@ -6,15 +6,11 @@ using UnityEngine;
 public class Interactable : MonoBehaviour
 {
     protected float maxDistanceToPlayer = 1;
-    private GameObject _player;
+    private Transform _playerTransform;
 
-    private void Start()
-    {
-        _player = GameObject.Find("Player");
-    }
     public virtual bool CanInteract()
     {
-        return Vector3.Distance(this.transform.position, _player.transform.position) <= maxDistanceToPlayer;
+        return Vector3.Distance(this.transform.position, _playerTransform.position) <= maxDistanceToPlayer;
     }
 
     public virtual void Interact()
@@ -27,6 +23,7 @@ public class Interactable : MonoBehaviour
         if (other.tag == "Player")
         {
             PlayerInteractionScript.InteractWithInteractable += Interact;
+            _playerTransform = other.transform;
         }
     }
 
